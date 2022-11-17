@@ -33,7 +33,7 @@ class GherkinDialectProvider implements IGherkinDialectProvider
 
 Map<String, GherkinLanguageKeywords> loadGherkinLanguagesFromJsonAsset() {
   final dialectsAsset = 'gherkin-languages.json';
-  final assetPath = 'assets/$dialectsAsset';
+  final assetPath = '../$dialectsAsset';
   var path = join(Directory.current.path, assetPath);
   var file = File(path);
   if( ! file.existsSync() ) {
