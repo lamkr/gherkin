@@ -88,4 +88,24 @@ void main()
         expect('', row.cells.elementAt(1).value);
         expect('b', row.cells.elementAt(2).value);
     } );
+
+    test('Steps with values', () {
+        final data =
+            'Feature:\n'
+            '  Scenario:\n'
+            '    Given I have a Calculator\n'
+            '    When I add 1 and 1\n'
+            '    Then the sum should be 2';
+        var tokenScanner = StringTokenScanner(data);
+        var doc = parser.parse(tokenScanner, matcher);
+
+        var steps = doc.feature
+            .children.first
+            .scenario
+            .steps;
+        for( var step in steps ) {
+            print(step);
+        }
+    } );
+
 }

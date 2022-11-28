@@ -20,7 +20,7 @@ class Step implements IHasLocation, INullSafetyObject
   final StepArgument argument;
 
   const Step(this._location, this.keyword, this.keywordType, this.text,
-      this.argument, {this.id=Strings.empty} );
+      this.argument, this.id );
 
   @override
   Location get location => _location;
@@ -52,7 +52,7 @@ class _InvalidStep extends Step
 {
   const _InvalidStep()
     : super(Location.empty, Strings.empty, StepKeywordType.unspecified,
-        Strings.empty, StepArgument.empty );
+        Strings.empty, StepArgument.empty, Strings.empty );
 
   @override
   bool get isEmpty => true;

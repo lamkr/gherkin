@@ -1,21 +1,18 @@
 package io.cucumber.gherkin;
 
 import io.cucumber.messages.IdGenerator;
-import io.cucumber.messages.types.Comment;
-import io.cucumber.messages.types.FeatureChild;
-import io.cucumber.messages.types.GherkinDocument;
-import io.cucumber.messages.types.Pickle;
-import io.cucumber.messages.types.TableRow;
+import io.cucumber.messages.types.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GherkinDocumentBuilderTest {
     private final IdGenerator idGenerator = new IncrementingIdGenerator();
 
-    @Test
+/*    @Test
     public void is_reusable() {
         Parser<GherkinDocument> parser = new Parser<>(new GherkinDocumentBuilder(idGenerator, "test.feature"));
         TokenMatcher matcher = new TokenMatcher();
@@ -87,5 +84,25 @@ public class GherkinDocumentBuilderTest {
         assertEquals("a", row.getCells().get(0).getValue());
         assertEquals("", row.getCells().get(1).getValue());
         assertEquals("b", row.getCells().get(2).getValue());
+    }
+*/
+    @Test
+    public void steps_with_values() {
+        Parser<GherkinDocument> parser = new Parser<>(new GherkinDocumentBuilder(idGenerator, "test.feature"));
+        GherkinDocument doc = parser.parse("" +
+                        "Feature:\n" +
+                        "  Scenario:\n" +
+                        "    Given I have a Calculator\n" +
+                        "    When I add 1 and 1\n" +
+                        "    Then the sum should be 2",
+                "test.feature"
+        );
+        Optional<Feature> feature = doc.getFeature();
+        List<FeatureChild> children = feature.get().getChildren();
+        Optional<Scenario> scenario = children.get(0).getScenario();
+        List<Step> steps = scenario.get().getSteps();
+        for (Step step: steps) {
+            System.out.println(step);
+        }
     }
 }

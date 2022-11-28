@@ -10,11 +10,14 @@ class GherkinDocumentBuilder
     extends AstRulesBuilder
     implements IBuilder<GherkinDocument>
 {
-  final IdGenerator idGenerator;
+  final IdGenerator _idGenerator;
   final Stack<AstNode> _stack = Stack<AstNode>();
   final List<Comment> _comments = <Comment>[];
 
-  GherkinDocumentBuilder(this.idGenerator) {
+  @override
+  IdGenerator get idGenerator => _idGenerator;
+
+  GherkinDocumentBuilder(this._idGenerator) {
     reset();
   }
 
@@ -57,7 +60,10 @@ class GherkinDocumentBuilder
 abstract class AstRulesBuilder
     implements IBuilder<GherkinDocument>
 {
-  dynamic _getTransformedNode(AstNode node, List<Comment> comments) {
+  IdGenerator get idGenerator;
+
+  dynamic _getTransformedNode(AstNode node, List<Comment> comments)
+  {
     switch (node.ruleType) {
       case RuleType.Step:
         return _createStep(node);
@@ -102,7 +108,7 @@ abstract class AstRulesBuilder
           , StepArgument.empty);
     }
     return Step(_getLocation(stepLine), stepLine.matchedKeyword,
-        keywordType, stepLine.matchedText, stepArg );
+        keywordType, stepLine.matchedText, stepArg, idGenerator.newId() );
   }
 
   Location _getLocation(Token token, [int column=0])

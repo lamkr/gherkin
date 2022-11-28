@@ -19,12 +19,12 @@ class UUID implements IdGenerator
 
 class Incrementing implements IdGenerator
 {
-  int _next = 0;
+  int _current = -1;
 
   @override
   String newId() {
-      _next++;
-      return _next.toString();
+      _current++;
+      return _current.toString();
   }
 }
 
