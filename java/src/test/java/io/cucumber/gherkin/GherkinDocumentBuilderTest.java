@@ -87,6 +87,28 @@ public class GherkinDocumentBuilderTest {
     }
 */
     @Test
+    public void sets_empty_table_cells() {
+        Parser<GherkinDocument> parser = new Parser<>(new GherkinDocumentBuilder(idGenerator, "test.feature"));
+        GherkinDocument doc = parser.parse("" +
+                "Feature:\n" +
+                "  Scenario:\n" +
+                "    Given a table\n" +
+                "      |name|age|height|\n" +
+                "      |John| 35|  1.80|",
+                "test.feature"
+        );
+        TableRow row = doc.getFeature().get().getChildren().get(0).getScenario().get().getSteps().get(0).getDataTable().get().getRows().get(0);
+        assertEquals("name", row.getCells().get(0).getValue());
+        assertEquals("age", row.getCells().get(1).getValue());
+        assertEquals("height", row.getCells().get(2).getValue());
+
+        row = doc.getFeature().get().getChildren().get(0).getScenario().get().getSteps().get(0).getDataTable().get().getRows().get(1);
+        assertEquals("John", row.getCells().get(0).getValue());
+        assertEquals("35", row.getCells().get(1).getValue());
+        assertEquals("1.80", row.getCells().get(2).getValue());
+    }
+
+    @Test
     public void steps_with_values() {
         Parser<GherkinDocument> parser = new Parser<>(new GherkinDocumentBuilder(idGenerator, "test.feature"));
         GherkinDocument doc = parser.parse("" +

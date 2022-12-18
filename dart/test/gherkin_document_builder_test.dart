@@ -89,6 +89,37 @@ void main()
         expect('b', row.cells.elementAt(2).value);
     } );
 
+    test('Sets a table with values', () {
+        final data =
+            'Feature:\n'
+            '  Scenario:\n'
+            '    Given a table\n'
+                '      |name|age|height|\n'
+                '      |John| 35|  1.80|';
+        var tokenScanner = StringTokenScanner(data);
+        var doc = parser.parse(tokenScanner, matcher);
+
+        var columns = doc.feature
+            .children.first
+            .scenario
+            .steps.first
+            .dataTable
+            .rows.first;
+        expect('name', columns.cells.first.value);
+        expect('age', columns.cells.elementAt(1).value);
+        expect('height', columns.cells.elementAt(2).value);
+
+        var values = doc.feature
+            .children.first
+            .scenario
+            .steps.first
+            .dataTable
+            .rows.elementAt(1);
+        expect('John', values.cells.first.value);
+        expect('35', values.cells.elementAt(1).value);
+        expect('1.80', values.cells.elementAt(2).value);
+    } );
+
     test('Steps with values', () {
         final data =
             'Feature:\n'

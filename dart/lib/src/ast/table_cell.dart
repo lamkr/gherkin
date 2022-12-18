@@ -10,7 +10,7 @@ class TableCell implements IHasLocation, INullSafetyObject
 
   final Location  _location;
 
-  final String value;
+  final int value;
 
   @override
   Location get location => _location;
