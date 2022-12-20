@@ -3,10 +3,12 @@ import 'dart:io';
 
 import 'package:gherkin/exceptions.dart';
 import 'package:path/path.dart';
-import 'package:gherkin/language.dart';
 
+import 'gherkin_dialect.dart';
 import 'gherkin_language_keywords.dart';
 import 'igherkin_dialect.dart';
+import 'igherkin_dialect_provider.dart';
+import 'location.dart';
 
 class GherkinDialectProvider implements IGherkinDialectProvider
 {
@@ -33,7 +35,7 @@ class GherkinDialectProvider implements IGherkinDialectProvider
 
 Map<String, GherkinLanguageKeywords> loadGherkinLanguagesFromJsonAsset() {
   final dialectsAsset = 'gherkin-languages.json';
-  final assetPath = '../$dialectsAsset';
+  final assetPath = 'assets/$dialectsAsset';
   var path = join(Directory.current.path, assetPath);
   var file = File(path);
   if( ! file.existsSync() ) {

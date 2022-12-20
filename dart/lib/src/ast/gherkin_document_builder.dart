@@ -209,10 +209,10 @@ abstract class AstRulesBuilder
       examplesLine.matchedText, description, header, rows);
   }
 
-  List<Tag> _getTags(AstNode node) {
+  Set<Tag> _getTags(AstNode node) {
     var tagsNode = node.singleOrDefault<AstNode>(RuleType.Tags, AstNode.empty);
     if (tagsNode.isEmpty) {
-      return <Tag>[];
+      return <Tag>{};
     }
 
     var tokens = tagsNode.getTokens(TokenType.TagLine);
@@ -221,7 +221,7 @@ abstract class AstRulesBuilder
         => token.matchedItems.map((tagItem)
             => _createTag(_getLocation(token, tagItem.column), tagItem.text))
       )
-      .cast<Tag>().toList();
+      .cast<Tag>().toSet();
   }
 
   Tag _createTag(Location location, String name)
@@ -258,7 +258,7 @@ abstract class AstRulesBuilder
       return Feature.empty;
     }
 
-    var children = <FeatureChild>[];
+    var children = <FeatureChild>{};
 
     final background = node.singleOrDefault<Background>(RuleType.Background
         , Background.empty);

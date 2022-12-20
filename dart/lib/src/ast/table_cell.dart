@@ -10,7 +10,7 @@ class TableCell implements IHasLocation, INullSafetyObject
 
   final Location  _location;
 
-  final int value;
+  final dynamic value;
 
   @override
   Location get location => _location;
@@ -18,7 +18,7 @@ class TableCell implements IHasLocation, INullSafetyObject
   const TableCell(this._location, this.value);
 
   @override
-  bool get isEmpty => false;//_location.isEmpty && value.isEmpty;
+  bool get isEmpty => false;
 
   @override
   bool get isNotEmpty => !isEmpty;
