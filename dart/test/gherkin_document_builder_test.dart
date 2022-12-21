@@ -94,8 +94,8 @@ void main()
             'Feature:\n'
             '  Scenario:\n'
             '    Given a table\n'
-                '      |name|age|height|\n'
-                '      |John| 35|  1.80|';
+            '      |name|age|height|\n'
+            '      |John| 35|  1.80|';
         var tokenScanner = StringTokenScanner(data);
         var doc = parser.parse(tokenScanner, matcher);
 
@@ -127,6 +127,35 @@ void main()
             '    Given I have a Calculator\n'
             '    When I add 1 and 1\n'
             '    Then the sum should be 2';
+        var tokenScanner = StringTokenScanner(data);
+        var doc = parser.parse(tokenScanner, matcher);
+
+        var steps = doc.feature
+            .children.first
+            .scenario
+            .steps;
+        for( var step in steps ) {
+            print(step);
+        }
+
+        var pickleCompiler = PickleCompiler(idGenerator);
+        var pickles = pickleCompiler.compile(doc, 'hello.feature');
+        expect(2, pickles.length);
+
+        expect(3, pickles.first.steps.length);
+
+        expect(2, pickles.elementAt(1).steps.length);
+    } );
+
+    test('Identical steps with values', () {
+        final data =
+            'Feature:\n'
+            '  Scenario:\n'
+            '    Given I have a Calculator\n'
+            '    When I add 1\n'
+            '    And I add 2\n'
+            '    And I add 3\n'
+            '    Then the sum should be 6';
         var tokenScanner = StringTokenScanner(data);
         var doc = parser.parse(tokenScanner, matcher);
 

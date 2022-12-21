@@ -126,5 +126,14 @@ public class GherkinDocumentBuilderTest {
         for (Step step: steps) {
             System.out.println(step);
         }
+
+        IdGenerator idGenerator = new IncrementingIdGenerator();
+        PickleCompiler pickleCompiler = new PickleCompiler(idGenerator);
+        List<Pickle> pickles = pickleCompiler.compile(doc, "hello.feature");
+        assertEquals(2, pickles.size());
+
+        assertEquals(3, pickles.get(0).getSteps().size());
+
+        assertEquals(2, pickles.get(1).getSteps().size());
     }
 }
