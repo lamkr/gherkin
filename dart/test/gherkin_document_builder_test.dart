@@ -12,7 +12,7 @@ void main()
     final builder = GherkinDocumentBuilder(idGenerator);
     final parser = Parser<GherkinDocument>(builder);
     final matcher = TokenMatcher(dialectProvider);
-
+/*
     test('Is reusable', () {
         var tokenScanner = StringTokenScanner('Feature: 1');
         var d1 = parser.parse(tokenScanner, matcher);
@@ -119,12 +119,12 @@ void main()
         expect('35', values.cells.elementAt(1).value);
         expect('1.80', values.cells.elementAt(2).value);
     } );
-
+*/
     test('Steps with values', () {
         final data =
             'Feature:\n'
             '  Scenario:\n'
-            '    Given I have a Calculator\n'
+            '    Given I have a "Calculator"\n'
             '    When I add 1 and 1\n'
             '    Then the sum should be 2';
         var tokenScanner = StringTokenScanner(data);
